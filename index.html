@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0f0d">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icons/pocketprofit-192.png">
+<title>PocketProfit</title>
+<style>
+:root{--bg:#0b0f0d;--card:#141b17;--card2:#1b2520;--line:#26332c;--tx:#e8f1ec;--mute:#8fa399;--g:#22c55e;--g2:#16a34a;--r:#f87171;--y:#fbbf24;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:84px}
+.wrap{max-width:520px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:0}h1 span{color:var(--g)}
+h2{font-size:15px;margin:22px 0 10px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.top{display:flex;justify-content:space-between;align-items:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.hero{background:linear-gradient(145deg,#12301f,#141b17);border-color:#1f4a31}
+.lbl{color:var(--mute);font-size:13px}.big{font-size:34px;font-weight:700;margin:2px 0}
+.pos{color:var(--g)}.neg{color:var(--r)}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.stat b{display:block;font-size:19px;margin-top:2px}
+button,select,input{font:inherit;color:var(--tx)}
+.btn{border:0;border-radius:12px;padding:13px 14px;font-weight:600;background:var(--g);color:#04130a;width:100%}
+.btn.alt{background:var(--card2);color:var(--tx);border:1px solid var(--line)}
+.btn.red{background:#3a1d1d;color:var(--r)}
+.btn:active{transform:scale(.98)}
+input,select{width:100%;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:13px;margin:4px 0 12px;min-height:48px}
+input:focus,select:focus{outline:2px solid var(--g);border-color:transparent}
+label{font-size:13px;color:var(--mute)}
+.seg{display:flex;background:var(--card2);border-radius:12px;padding:4px;margin-bottom:14px;border:1px solid var(--line)}
+.seg button{flex:1;border:0;background:none;padding:10px;border-radius:9px;color:var(--mute);font-weight:600}
+.seg button.on{background:var(--g);color:#04130a}
+.tx{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.tx:last-child{border:0}
+.ico{width:40px;height:40px;border-radius:12px;background:var(--card2);display:grid;place-items:center;font-size:20px;flex:none}
+.tx .m{flex:1;min-width:0}.tx .m div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tx small{color:var(--mute)}
+.x{border:0;background:#3a1d1d;color:var(--r);border-radius:10px;width:40px;height:40px;font-size:18px;flex:none}
+.bar{height:8px;background:var(--card2);border-radius:6px;overflow:hidden;margin-top:6px}
+.bar i{display:block;height:100%;background:var(--g);border-radius:6px}
+.bar.r i{background:var(--r)}
+.cat{margin-bottom:12px}.cat .h{display:flex;justify-content:space-between}
+nav{position:fixed;left:0;right:0;bottom:0;background:#0e1411;border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;background:none;border:0;color:var(--mute);padding:6px 0;font-size:11px}
+nav button span{display:block;font-size:20px}
+nav button.on{color:var(--g)}
+.view{display:none}.view.on{display:block}
+.empty{color:var(--mute);text-align:center;padding:18px 0}
+#toast{position:fixed;left:16px;right:16px;bottom:calc(80px + env(safe-area-inset-bottom,0px));background:var(--card2);border:1px solid var(--g2);border-radius:12px;padding:12px 14px;display:none;justify-content:space-between;align-items:center;z-index:9}
+#toast button{background:none;border:0;color:var(--g);font-weight:700}
+.pill{font-size:12px;background:#1f4a31;color:var(--g);border-radius:8px;padding:2px 7px;margin-left:6px}
+.gear{background:var(--card2);border:1px solid var(--line);border-radius:12px;width:44px;height:44px;font-size:20px;margin-left:10px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal .card{max-width:420px;width:100%;margin:0}
+.help{color:var(--mute);font-size:13px;margin:6px 0 12px}
+textarea{width:100%;min-height:120px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--tx);font:13px/1.4 monospace;margin:6px 0 10px}
+details summary{color:var(--g);padding:10px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="top"><h1>Pocket<span>Profit</span></h1><div style="display:flex;align-items:center"><span class="lbl" id="today"></span><button class="gear" aria-label="Settings" onclick="show('set')">⚙️</button></div></div>
+
+<section class="view on" id="v-home">
+<div class="card hero"><div class="lbl">Net profit</div><div class="big" id="net">$0.00</div>
+<div class="row"><div><div class="lbl">Income</div><b class="pos" id="inc">$0.00</b></div><div><div class="lbl">Expenses</div><b class="neg" id="exp">$0.00</b></div></div></div>
+<div class="row" style="margin-bottom:12px"><button class="btn" onclick="goAdd('income')">＋ Add income</button><button class="btn alt" onclick="goAdd('expense')">− Add expense</button></div>
+<h2>Income by category</h2><div class="card" id="bycat"></div>
+<h2>Expenses by category</h2><div class="card" id="byexp"></div>
+<h2>Recent</h2><div class="card" id="recent"></div>
+</section>
+
+<section class="view" id="v-add">
+<h2>New transaction</h2>
+<div class="card">
+<div class="seg"><button id="t-income" class="on" onclick="setType('income')">Income</button><button id="t-expense" onclick="setType('expense')">Expense</button></div>
+<label>Amount ($)</label><input id="amt" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0.00">
+<label>Category</label><select id="cat"></select>
+<label>Note (optional)</label><input id="note" type="text" maxlength="60" placeholder="e.g. Weekend orders">
+<label>Date</label><input id="date" type="date">
+<button class="btn" onclick="addTx()">Save transaction</button>
+</div>
+</section>
+
+<section class="view" id="v-sum">
+<h2>Earnings summary</h2>
+<div class="seg"><button id="p-d" class="on" onclick="setP('d')">Daily</button><button id="p-w" onclick="setP('w')">Weekly</button><button id="p-m" onclick="setP('m')">Monthly</button></div>
+<div class="card hero"><div class="lbl" id="plbl">Today</div><div class="big" id="pnet">$0.00</div>
+<div class="row"><div><div class="lbl">Income</div><b class="pos" id="pinc"></b></div><div><div class="lbl">Expenses</div><b class="neg" id="pexp"></b></div></div></div>
+<div class="card" id="plist"></div>
+</section>
+
+<section class="view" id="v-goal">
+<h2>Savings goal calculator</h2>
+<div class="card">
+<label>Goal amount ($)</label><input id="g-t" type="number" inputmode="decimal" min="0" oninput="calcGoal()">
+<label>Already saved ($)</label><input id="g-s" type="number" inputmode="decimal" min="0" oninput="calcGoal()">
+<label>Target date</label><input id="g-d" type="date" oninput="calcGoal()">
+<button class="btn alt" onclick="useNet()">Use my net profit as saved</button>
+</div>
+<div class="card" id="g-out"></div>
+</section>
+
+<section class="view" id="v-hist">
+<h2>Transaction history</h2>
+<div class="seg"><button id="f-all" class="on" onclick="setF('all')">All</button><button id="f-income" onclick="setF('income')">Income</button><button id="f-expense" onclick="setF('expense')">Expenses</button></div>
+<div class="card" id="hist"></div>
+<button class="btn alt" onclick="clearSamples()" style="margin-bottom:10px">Remove sample transactions</button>
+<button class="btn red" onclick="clearAll()">Delete everything</button>
+</section>
+
+<section class="view" id="v-set">
+<h2>Settings · Data</h2>
+<div class="card"><b>📤 Export spreadsheet</b><p class="help">Save all income and expense transactions as a CSV file. It opens in Google Sheets or Excel.</p><button class="btn" onclick="exportCSV()">Export CSV</button></div>
+<div class="card"><b>💾 Backup</b><p class="help" id="setinfo"></p><p class="help">Downloads one file with all your transactions and your savings goal. Keep it somewhere safe, like Google Drive.</p><button class="btn" onclick="exportBackup()">Download backup</button></div>
+<div class="card"><b>♻️ Restore</b><p class="help">Choose a PocketProfit backup (.json). You will be asked to confirm before your current data is replaced.</p><input type="file" id="rf" hidden accept=".json,application/json,text/plain"><button class="btn alt" onclick="$('rf').click()">Choose backup file</button>
+<details><summary>Can’t pick a file? Paste backup text</summary><textarea id="pt" placeholder="Paste the backup contents here"></textarea><button class="btn alt" onclick="startRestore($('pt').value)">Restore from pasted text</button></details></div>
+<div class="card"><b>🧪 Sample data</b><p class="help">Add example transactions to try the app. They are labeled “sample” and can be removed from the History tab.</p><button class="btn alt" onclick="loadSamples()">Load sample data</button></div>
+<div class="card" id="fb" style="display:none"><b>Copy your file</b><p class="help">Direct downloads aren’t available here. Copy this text and save it as <span id="fbn"></span> yourself.</p><textarea id="fbt" readonly></textarea><button class="btn alt" onclick="copyFb()">Copy text</button></div>
+</section>
+
+<div class="modal" id="modal"><div class="card"><b id="mt"></b><p class="help" id="mb"></p><div class="row"><button class="btn alt" id="mno">Cancel</button><button class="btn red" id="myes">Replace data</button></div></div></div>
+</div>
+
+<div id="toast"><span id="tmsg"></span><button id="tundo">Undo</button></div>
+
+<nav>
+<button class="on" data-v="home"><span>📊</span>Home</button>
+<button data-v="add"><span>➕</span>Add</button>
+<button data-v="sum"><span>📅</span>Summary</button>
+<button data-v="goal"><span>🎯</span>Goal</button>
+<button data-v="hist"><span>🧾</span>History</button>
+</nav>
+
+<script>
+var KEY='pocketprofit.v1';
+var INC={survey:['📝','Surveys'],games:['🎮','Reward games'],delivery:['🛵','Delivery jobs'],freelance:['💻','Freelancing'],crypto:['🪙','Cryptocurrency'],other:['💼','Other income']};
+var EXP={food:['🍔','Food'],transport:['⛽','Transport / fuel'],fees:['🏷️','Fees'],bills:['📱','Bills / data'],otherx:['🧩','Other expense']};
+var S={tx:[],goal:{t:0,s:0,d:''}},type='income',per='d',filt='all',lastDel=null,tt;
+
+function dstr(d){var m=d.getMonth()+1,x=d.getDate();return d.getFullYear()+'-'+(m<10?'0':'')+m+'-'+(x<10?'0':'')+x}
+function pd(s){var a=s.split('-');return new Date(+a[0],+a[1]-1,+a[2])}
+function ago(n){var d=new Date();d.setDate(d.getDate()-n);return dstr(d)}
+function money(n){var s=Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',');return (n<0?'-':'')+'$'+s}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function $(i){return document.getElementById(i)}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+function load(){
+ var raw=null;try{raw=localStorage.getItem(KEY)}catch(e){}
+ if(raw){try{var o=JSON.parse(raw);if(o&&o.tx){S=o;return}}catch(e){}}
+ S.tx=[];S.goal={t:0,s:0,d:''};save();
+}
+function loadSamples(){
+ if(S.tx.some(function(t){return t.sample})){toast('Sample data is already loaded');return}
+ var smp=[['income','survey',4.5,'Survey site payout',0],['income','games',3.2,'Reward game cash-out',0],['income','delivery',38,'Evening deliveries',1],['expense','transport',9.5,'Fuel',1],['income','freelance',60,'Logo gig',2],['income','crypto',7.8,'Staking reward',3],['expense','bills',12,'Mobile data',3],['income','delivery',45,'Weekend deliveries',5],['expense','fees',3.4,'Payout fee',6],['income','survey',6,'Survey batch',9],['income','freelance',120,'Writing project',16],['expense','food',22,'Work lunches',20]];
+ S.tx=S.tx.concat(smp.map(function(a){return {id:uid(),type:a[0],cat:a[1],amt:a[2],note:a[3],date:ago(a[4]),sample:true}}));
+ save();refresh();toast('Sample data added. Remove it any time from History.')
+}
+function info(t){return t.type==='income'?INC[t.cat]:EXP[t.cat]}
+function sum(list,ty){return list.filter(function(t){return t.type===ty}).reduce(function(a,t){return a+t.amt},0)}
+function sorted(){return S.tx.slice().sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:0})}
+
+function txRow(t){var i=info(t)||['•','?'];
+ return '<div class="tx"><div class="ico">'+i[0]+'</div><div class="m"><div>'+esc(t.note||i[1])+(t.sample?'<span class="pill">sample</span>':'')+'</div><small>'+i[1]+' · '+t.date+'</small></div><b class="'+(t.type==='income'?'pos':'neg')+'">'+(t.type==='income'?'+':'−')+money(t.amt)+'</b><button class="x" aria-label="Delete" onclick="del(\''+t.id+'\')">🗑</button></div>'}
+
+function catBars(ty,map,el){
+ var list=S.tx.filter(function(t){return t.type===ty}),tot=sum(list,ty),h='';
+ Object.keys(map).forEach(function(k){var v=list.filter(function(t){return t.cat===k}).reduce(function(a,t){return a+t.amt},0);
+  if(v>0)h+='<div class="cat"><div class="h"><span>'+map[k][0]+' '+map[k][1]+'</span><b>'+money(v)+'</b></div><div class="bar '+(ty==='expense'?'r':'')+'"><i style="width:'+(tot?v/tot*100:0)+'%"></i></div></div>'});
+ el.innerHTML=h||'<div class="empty">Nothing yet</div>'}
+
+function renderHome(){
+ var i=sum(S.tx,'income'),e=sum(S.tx,'expense'),n=i-e;
+ $('inc').textContent=money(i);$('exp').textContent=money(e);
+ $('net').textContent=money(n);$('net').className='big '+(n>=0?'pos':'neg');
+ catBars('income',INC,$('bycat'));catBars('expense',EXP,$('byexp'));
+ var r=sorted().slice(0,5);$('recent').innerHTML=r.length?r.map(txRow).join(''):'<div class="empty">No transactions yet. Tap Add income.</div>'}
+
+function renderHist(){
+ var l=sorted().filter(function(t){return filt==='all'||t.type===filt});
+ $('hist').innerHTML=l.length?l.map(txRow).join(''):'<div class="empty">No transactions</div>'}
+
+function wk(s){var d=pd(s),x=(d.getDay()+6)%7;d.setDate(d.getDate()-x);return dstr(d)}
+function key(s){return per==='d'?s:per==='w'?wk(s):s.slice(0,7)}
+function keys(){var a=[],d=new Date(),i;
+ if(per==='d')for(i=0;i<7;i++)a.push(ago(i));
+ else if(per==='w')for(i=0;i<6;i++)a.push(wk(ago(i*7)));
+ else for(i=0;i<6;i++){var m=new Date(d.getFullYear(),d.getMonth()-i,1);a.push(dstr(m).slice(0,7))}
+ return a}
+function nice(k){
+ if(per==='d'){return k===ago(0)?'Today':k===ago(1)?'Yesterday':pd(k).toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'})}
+ if(per==='w')return 'Week of '+pd(k).toLocaleDateString(undefined,{month:'short',day:'numeric'});
+ return pd(k+'-01').toLocaleDateString(undefined,{month:'long',year:'numeric'})}
+function renderSum(){
+ var ks=keys(),rows=ks.map(function(k){var l=S.tx.filter(function(t){return key(t.date)===k});var i=sum(l,'income'),e=sum(l,'expense');return {k:k,i:i,e:e,n:i-e}});
+ var mx=Math.max.apply(null,rows.map(function(r){return Math.abs(r.n)}).concat([1])),c=rows[0];
+ $('plbl').textContent=({d:'Today',w:'This week',m:'This month'})[per];
+ $('pnet').textContent=money(c.n);$('pnet').className='big '+(c.n>=0?'pos':'neg');
+ $('pinc').textContent=money(c.i);$('pexp').textContent=money(c.e);
+ $('plist').innerHTML=rows.map(function(r){return '<div class="cat"><div class="h"><span>'+nice(r.k)+'</span><b class="'+(r.n>=0?'pos':'neg')+'">'+money(r.n)+'</b></div><div class="bar '+(r.n<0?'r':'')+'"><i style="width:'+Math.abs(r.n)/mx*100+'%"></i></div><small class="lbl">In '+money(r.i)+' · Out '+money(r.e)+'</small></div>'}).join('')}
+function setP(p){per=p;['d','w','m'].forEach(function(x){$('p-'+x).classList.toggle('on',x===p)});renderSum()}
+function setF(f){filt=f;['all','income','expense'].forEach(function(x){$('f-'+x).classList.toggle('on',x===f)});renderHist()}
+
+function fillCats(){var m=type==='income'?INC:EXP,h='';Object.keys(m).forEach(function(k){h+='<option value="'+k+'">'+m[k][0]+' '+m[k][1]+'</option>'});$('cat').innerHTML=h}
+function setType(t){type=t;$('t-income').classList.toggle('on',t==='income');$('t-expense').classList.toggle('on',t==='expense');fillCats()}
+function goAdd(t){setType(t);show('add')}
+function addTx(){
+ var a=parseFloat($('amt').value);
+ if(!(a>0)){toast('Enter an amount above 0');$('amt').focus();return}
+ S.tx.push({id:uid(),type:type,cat:$('cat').value,amt:Math.round(a*100)/100,note:$('note').value.trim(),date:$('date').value||ago(0)});
+ save();$('amt').value='';$('note').value='';toast((type==='income'?'Income':'Expense')+' saved',null);show('home')}
+function del(id){
+ var i=S.tx.findIndex(function(t){return t.id===id});if(i<0)return;
+ var t=S.tx.splice(i,1)[0];save();refresh();
+ toast('Transaction deleted',function(){S.tx.push(t);save();refresh()})}
+function clearSamples(){var n=S.tx.length;S.tx=S.tx.filter(function(t){return !t.sample});save();refresh();toast((n-S.tx.length)+' sample transactions removed')}
+function clearAll(){var bk=S.tx;S.tx=[];save();refresh();toast('All transactions deleted',function(){S.tx=bk;save();refresh()})}
+
+function calcGoal(){
+ var t=parseFloat($('g-t').value)||0,s=parseFloat($('g-s').value)||0,d=$('g-d').value;
+ S.goal={t:t,s:s,d:d};save();
+ var rem=Math.max(t-s,0),pct=t?Math.min(s/t*100,100):0,h='<div class="h" style="display:flex;justify-content:space-between"><b>'+pct.toFixed(0)+'% saved</b><span class="lbl">'+money(rem)+' to go</span></div><div class="bar"><i style="width:'+pct+'%"></i></div><div style="height:14px"></div>';
+ if(!t){$('g-out').innerHTML='<div class="empty">Enter a goal amount to begin</div>';return}
+ if(rem===0)h+='<b class="pos">🎉 Goal reached!</b>';
+ else if(d){var days=Math.ceil((pd(d)-pd(ago(0)))/864e5);
+  if(days<=0)h+='<div class="neg">Pick a date in the future.</div>';
+  else h+='<div class="lbl">To hit your goal by '+d+' ('+days+' days) save:</div><div class="row" style="margin-top:8px"><div class="stat"><span class="lbl">Per day</span><b>'+money(rem/days)+'</b></div><div class="stat"><span class="lbl">Per week</span><b>'+money(rem/days*7)+'</b></div><div class="stat"><span class="lbl">Per month</span><b>'+money(rem/days*30)+'</b></div></div>'}
+ var l=S.tx.filter(function(x){return x.date>=ago(29)}),avg=(sum(l,'income')-sum(l,'expense'))/30;
+ if(rem>0){h+='<div style="margin-top:14px" class="lbl">Your average net profit over the last 30 days is <b class="'+(avg>=0?'pos':'neg')+'">'+money(avg)+'/day</b>.</div>';
+  if(avg>0){var n=Math.ceil(rem/avg),e=new Date();e.setDate(e.getDate()+n);h+='<div style="margin-top:6px">At this pace you reach your goal in <b>'+n+' days</b> (about '+e.toLocaleDateString(undefined,{month:'short',day:'numeric',year:'numeric'})+').</div>'}
+  else h+='<div style="margin-top:6px" class="neg">Your net profit is not positive yet, so a finish date cannot be estimated.</div>'}
+ $('g-out').innerHTML=h}
+function useNet(){var n=sum(S.tx,'income')-sum(S.tx,'expense');$('g-s').value=Math.max(n,0).toFixed(2);calcGoal()}
+
+function toast(m,undo){clearTimeout(tt);$('tmsg').textContent=m;var u=$('tundo');u.style.display=undo?'block':'none';u.onclick=function(){undo&&undo();$('toast').style.display='none'};$('toast').style.display='flex';tt=setTimeout(function(){$('toast').style.display='none'},4000)}
+function refresh(){renderHome();renderHist();renderSum();calcGoal();renderSet()}
+function show(v){
+ document.querySelectorAll('.view').forEach(function(e){e.classList.toggle('on',e.id==='v-'+v)});
+ document.querySelectorAll('nav button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});
+ refresh();window.scrollTo(0,0)}
+document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){show(b.dataset.v)}});
+
+/* ---- Settings: export, backup, restore ---- */
+function renderSet(){var n=S.tx.length;$('setinfo').textContent=n+' transaction'+(n===1?'':'s')+' saved on this device.'}
+function showFallback(name,text){$('fb').style.display='block';$('fbn').textContent=name;$('fbt').value=text;$('fb').scrollIntoView()}
+function copyFb(){var t=$('fbt');t.select();try{navigator.clipboard.writeText(t.value).then(function(){toast('Copied')},function(){document.execCommand('copy');toast('Copied')})}catch(e){try{document.execCommand('copy');toast('Copied')}catch(x){}}}
+function localSave(name,text){
+ try{var b=new Blob([text],{type:name.slice(-4)==='.csv'?'text/csv':'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},4000);toast('Download started: '+name)}catch(e){showFallback(name,text)}}
+function deliver(name,text){
+ var fb=function(){showFallback(name,text)};
+ if(!window.claude||!claude.use){localSave(name,text);return}
+ claude.use('downloads').then(function(d){
+  if(!d){fb();return}
+  return d.save({filename:name,data:text}).then(function(){toast('Saved '+name)},function(e){if(e&&e.code==='declined')toast('Download cancelled');else fb()});
+ }).catch(fb)}
+function csvCell(v){v=String(v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}
+function exportCSV(){
+ if(!S.tx.length){toast('No transactions to export');return}
+ var rows=['Date,Type,Category,Note,Amount'];
+ sorted().forEach(function(t){var i=info(t)||['','Unknown'];rows.push([t.date,t.type,i[1],t.note||''].map(csvCell).join(',')+','+t.amt.toFixed(2))});
+ deliver('pocketprofit-transactions-'+ago(0)+'.csv','\uFEFF'+rows.join('\r\n'))}
+function exportBackup(){
+ deliver('pocketprofit-backup-'+ago(0)+'.json',JSON.stringify({app:'PocketProfit',version:1,exported:new Date().toISOString(),transactions:S.tx,goal:S.goal},null,2))}
+var DRE=/^\d{4}-\d{2}-\d{2}$/;
+function parseBackup(text){
+ var o;try{o=JSON.parse(text)}catch(e){return {err:'That does not look like a PocketProfit backup.'}}
+ if(!o||o.app!=='PocketProfit'||!Array.isArray(o.transactions))return {err:'That does not look like a PocketProfit backup.'};
+ var ok=[],bad=0;
+ o.transactions.forEach(function(t){
+  var m=t&&(t.type==='income'?INC:t.type==='expense'?EXP:null),a=t&&Number(t.amt);
+  if(!m||!m[t.cat]||!isFinite(a)||a<0||!DRE.test(String(t.date))){bad++;return}
+  ok.push({id:(typeof t.id==='string'&&t.id)?t.id:uid(),type:t.type,cat:t.cat,amt:Math.round(a*100)/100,note:String(t.note||'').slice(0,60),date:t.date,sample:t.sample===true})});
+ var g=o.goal||{};
+ return {tx:ok,bad:bad,when:o.exported,goal:{t:Math.max(Number(g.t)||0,0),s:Math.max(Number(g.s)||0,0),d:DRE.test(String(g.d))?g.d:''}}}
+function setGoalInputs(){$('g-t').value=S.goal.t||'';$('g-s').value=S.goal.s||'';$('g-d').value=S.goal.d||''}
+function startRestore(text){
+ var r=parseBackup(text||'');if(r.err){toast(r.err);return}
+ var d=r.when?new Date(r.when):null,ds=(d&&!isNaN(d))?' made on '+d.toLocaleDateString():'',n=S.tx.length;
+ ask('Replace your current data?','This will replace your '+n+' current transaction'+(n===1?'':'s')+' and savings goal with '+r.tx.length+' transaction'+(r.tx.length===1?'':'s')+' and the goal from the backup'+ds+'.'+(r.bad?' '+r.bad+' invalid entries will be skipped.':'')+' Tip: download a backup first if you want to keep your current data.','Replace data',function(){
+  var prev={tx:S.tx,goal:S.goal};
+  S={tx:r.tx,goal:r.goal};save();setGoalInputs();refresh();$('pt').value='';
+  toast('Backup restored',function(){S=prev;save();setGoalInputs();refresh()})})}
+var askCb=null;
+function ask(t,b,y,fn){$('mt').textContent=t;$('mb').textContent=b;$('myes').textContent=y;askCb=fn;$('modal').style.display='flex'}
+$('mno').onclick=function(){$('modal').style.display='none';askCb=null};
+$('myes').onclick=function(){$('modal').style.display='none';var f=askCb;askCb=null;if(f)f()};
+$('rf').onchange=function(){
+ var f=this.files&&this.files[0];if(!f)return;
+ if(f.size>5e6){toast('That file is too large');this.value='';return}
+ var rd=new FileReader();rd.onload=function(){startRestore(String(rd.result))};rd.onerror=function(){toast('Could not read that file')};rd.readAsText(f);this.value=''};
+
+load();fillCats();$('date').value=ago(0);
+$('g-t').value=S.goal.t||'';$('g-s').value=S.goal.s||'';$('g-d').value=S.goal.d||'';
+$('today').textContent=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+refresh();
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (err) {
+      console.warn('PocketProfit offline setup could not start:', err);
+    });
+  });
+}
+</script>
+</body>
+</html>

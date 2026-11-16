@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "PocketProfit",
+  "short_name": "PocketProfit",
+  "description": "Track side-hustle income, expenses, profit and savings goals.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b0f0d",
+  "theme_color": "#0b0f0d",
+  "icons": [
+    { "src": "./icons/pocketprofit-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/pocketprofit-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
